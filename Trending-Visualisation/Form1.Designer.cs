@@ -41,15 +41,14 @@ namespace Trending_Visualisation
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutTrendingVisualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutSourceCSVFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutTrendingVisualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.FileNameToolStrip = new System.Windows.Forms.ToolStripStatusLabel();
             this.FileStatusToolStrip = new System.Windows.Forms.ToolStripStatusLabel();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label1 = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.LoadTImer = new System.Windows.Forms.Timer(this.components);
             this.buttonGenerateChart = new System.Windows.Forms.Button();
@@ -118,19 +117,19 @@ namespace Trending_Visualisation
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
-            // aboutTrendingVisualToolStripMenuItem
-            // 
-            this.aboutTrendingVisualToolStripMenuItem.Name = "aboutTrendingVisualToolStripMenuItem";
-            this.aboutTrendingVisualToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.aboutTrendingVisualToolStripMenuItem.Text = "About Trending Visual...";
-            this.aboutTrendingVisualToolStripMenuItem.Click += new System.EventHandler(this.aboutTrendingVisualToolStripMenuItem_Click);
-            // 
             // aboutSourceCSVFilesToolStripMenuItem
             // 
             this.aboutSourceCSVFilesToolStripMenuItem.Name = "aboutSourceCSVFilesToolStripMenuItem";
             this.aboutSourceCSVFilesToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.aboutSourceCSVFilesToolStripMenuItem.Text = "View Help";
             this.aboutSourceCSVFilesToolStripMenuItem.Click += new System.EventHandler(this.aboutSourceCSVFilesToolStripMenuItem_Click);
+            // 
+            // aboutTrendingVisualToolStripMenuItem
+            // 
+            this.aboutTrendingVisualToolStripMenuItem.Name = "aboutTrendingVisualToolStripMenuItem";
+            this.aboutTrendingVisualToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.aboutTrendingVisualToolStripMenuItem.Text = "About Trending Visual...";
+            this.aboutTrendingVisualToolStripMenuItem.Click += new System.EventHandler(this.aboutTrendingVisualToolStripMenuItem_Click);
             // 
             // dataGridView1
             // 
@@ -186,15 +185,6 @@ namespace Trending_Visualisation
             this.chart1.TabIndex = 3;
             this.chart1.Text = "chart1";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(514, 521);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "label1";
-            // 
             // LoadTImer
             // 
             this.LoadTImer.Enabled = true;
@@ -217,7 +207,6 @@ namespace Trending_Visualisation
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1254, 589);
             this.Controls.Add(this.buttonGenerateChart);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.dataGridView1);
@@ -253,7 +242,6 @@ namespace Trending_Visualisation
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel FileNameToolStrip;
         private System.Windows.Forms.ToolStripStatusLabel FileStatusToolStrip;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Timer LoadTImer;
         private System.Windows.Forms.Button buttonGenerateChart;

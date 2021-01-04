@@ -18,6 +18,7 @@ namespace Trending_Visualisation
         {
             InitializeComponent();
 			this.Icon = new Icon("Resources/Form.ico");
+            chart1.Series.Clear();
         }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -55,7 +56,8 @@ namespace Trending_Visualisation
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            SettingsForm SettingsDialog = new SettingsForm();
+            SettingsDialog.ShowDialog();
         }
 
         private void aboutTrendingVisualToolStripMenuItem_Click(object sender, EventArgs e)
@@ -134,11 +136,12 @@ namespace Trending_Visualisation
             series.ChartType = SeriesChartType.Line;
             series.XValueMember = "Item";
             series.YValueMembers = "Összesen";
+            series.XAxisType = "Test1";
             series.BorderWidth = 2;
             chart1.Series.Add(series);
 
             var legend = chart1.Legends[0];
-            legend.Enabled = false;
+            // legend.Enabled = false;
 
             var chartArea = chart1.ChartAreas[0];
             chartArea.AxisX.MajorGrid.Enabled = false;

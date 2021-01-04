@@ -1,6 +1,6 @@
 ﻿namespace Trending_Visualisation
 {
-    partial class HelpCSV
+    partial class HelpForm
     {
         /// <summary>
         /// Required designer variable.
