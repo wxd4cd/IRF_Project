@@ -59,7 +59,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox1);
             this.Name = "HelpCSV";
-            this.Text = "HelpCSV";
+            this.Text = "Help";
             this.ResumeLayout(false);
 
         }

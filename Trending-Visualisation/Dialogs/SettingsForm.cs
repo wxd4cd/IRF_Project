@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace Trending_Visualisation
 {
-    public partial class Settings : Form
+    public partial class SettingsForm : Form
     {
-        public Settings()
+        public SettingsForm()
         {
             InitializeComponent();
+        }
+
+        private void Savebutton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Cancelbutton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

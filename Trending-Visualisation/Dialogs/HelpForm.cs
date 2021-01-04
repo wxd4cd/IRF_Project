@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Trending_Visualisation
 {
-    public partial class HelpCSV : Form
+    public partial class HelpForm : Form
     {
-        public HelpCSV()
+        public HelpForm()
         {
             InitializeComponent();
+            this.Icon = new Icon("Resources/Form.ico");
             richTextBox1.LoadFile("Resources/HelpCSV.rtf");
         }
 

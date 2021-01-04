@@ -112,8 +112,8 @@ namespace Trending_Visualisation
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutTrendingVisualToolStripMenuItem,
-            this.aboutSourceCSVFilesToolStripMenuItem});
+            this.aboutSourceCSVFilesToolStripMenuItem,
+            this.aboutTrendingVisualToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
@@ -129,7 +129,7 @@ namespace Trending_Visualisation
             // 
             this.aboutSourceCSVFilesToolStripMenuItem.Name = "aboutSourceCSVFilesToolStripMenuItem";
             this.aboutSourceCSVFilesToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.aboutSourceCSVFilesToolStripMenuItem.Text = "About CSV file format...";
+            this.aboutSourceCSVFilesToolStripMenuItem.Text = "View Help";
             this.aboutSourceCSVFilesToolStripMenuItem.Click += new System.EventHandler(this.aboutSourceCSVFilesToolStripMenuItem_Click);
             // 
             // dataGridView1
