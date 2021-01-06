@@ -154,42 +154,118 @@ namespace Trending_Visualisation
             }
             if (! Settings.GetEmpty())
             {
-                GenerateMovingAverages();
-                FillChart(Settings);
+                var DrawTable = GenerateMovingAverages();
+                FillChart(Settings, DrawTable);
             }
         }
 
-        private void GenerateMovingAverages()
+        private DataTable GenerateMovingAverages()
         {
-            
+            var MergedTable = CSVTable;
+            var columns = Settings.GetColumns();
+            if (columns.Count > 1)
+            {
+                var originlist = new List<int>();
+                var col = columns["Base"].ColumName;
+                DataView dv = new DataView(CSVTable);
+                DataTable dt = dv.ToTable(true, col);
+                foreach (DataRow row in dt.Rows)
+                {
+                    var cell = Int32.Parse(row.ItemArray[0].ToString());
+                    originlist.Add(cell);
+                }
+                
+                foreach (var item in columns)
+                {
+                    if (item.Key != "Base")
+                    {
+                        var resultlist = CalculateMovingAverage(Int32.Parse(item.Key), originlist);
+                        var newcol = item.Value.Legend;
+                        MergedTable.Columns.Add(newcol);
+                        int i = 0;
+                        foreach (DataRow row in MergedTable.Rows)
+                        {
+                            var rowArray = row.ItemArray;
+                            rowArray[rowArray.Length - 1] = resultlist[i].ToString();
+                            i++;
+                        }
+                    }
+
+                }
+            }
+            return MergedTable;
         }
 
-        private void FillChart(Settings settings)
+        private List<int> CalculateMovingAverage(int point, List<int> originlist)
         {
-            chart1.DataSource = CSVTable;
+            var resultlist = new List<int>();
+            var length = originlist.Count;
+            for (int i=1;i<=length;i++)
+            {
+                if (i <= point / 2)
+                {
+                    resultlist.Add(0);
+                }
+                if (i > length - point / 2)
+                {
+                    resultlist.Add(0);
+                }
+                if (i > point / 2 && i <= length - point / 2)
+                {
+                    var range = new List<int>();
+                    var m = point % 2;
+                    if (m == 0)
+                    {
+                        range = originlist.GetRange(i - point / 2 - 1, point + 1);
+                        range[0] = range[0] / 2;
+                        range[point] = range[point] / 2;
+                    } else
+                    {
+                        range = originlist.GetRange(i - point / 2 - 1, point);
+                    
+                    }
+                    resultlist.Add(range.Sum() / point);
+                }
+
+            }
+            return resultlist;
+        }
+
+        private void FillChart(Settings settings, DataTable filltable)
+        {
+            chart1.DataSource = filltable;
             chart1.Series.Clear();
             var series = new Series();
             series.ChartType = SeriesChartType.Line;
             series.XValueMember = settings.GetXColumn();
-            var columns = settings.GetColumns();
+            Dictionary<string, ColumnData> columns = settings.GetColumns();
             series.YValueMembers = columns["Base"].ColumName;
             series.BorderWidth = 2;
             series.Color = columns["Base"].Color;
             series.Name = settings.GetBaseLegend();
             chart1.Series.Add(series);
-            columns.Remove("Base");
-
             chart1.ChartAreas[0].AxisX.Title = settings.GetXTitle();
             chart1.ChartAreas[0].AxisY.Title = columns["Base"].Legend;
-
-
-            var legend = chart1.Legends[0];
-            // legend.Enabled = false;
+            foreach (var item in columns)
+            {
+                if (item.Key != "Base")
+                {
+                    var newseries = new Series();
+                    newseries.ChartType = SeriesChartType.Line;
+                    newseries.XValueMember = settings.GetXColumn();
+                    newseries.YValueMembers = item.Value.ColumName;
+                    newseries.BorderWidth = 2;
+                    newseries.Color = item.Value.Color;
+                    newseries.Name = item.Value.Legend;
+                    chart1.Series.Add(newseries);
+                }
+            }
 
             var chartArea = chart1.ChartAreas[0];
             chartArea.AxisX.MajorGrid.Enabled = false;
             chartArea.AxisY.MajorGrid.Enabled = false;
             chartArea.AxisY.IsStartedFromZero = false;
+            chartArea.BorderColor = Color.Black;
         }
     }
 }

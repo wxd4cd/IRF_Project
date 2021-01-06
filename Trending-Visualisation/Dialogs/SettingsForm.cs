@@ -37,18 +37,20 @@ namespace Trending_Visualisation
                 YcomboBox.SelectedIndex = YcomboBox.FindString(columns["Base"].ColumName, 0);
                 Ytitle.Text = columns["Base"].Legend;
                 BaseColorbutton.BackColor = columns["Base"].Color;
-                columns.Remove("Base");
                 int i = 1;
                 foreach (var item in columns)
                 {
-                    var Point = (TextBox)this.Controls.Find("PointBox" + i.ToString(), true)[0];
-                    var Legend = (TextBox)this.Controls.Find("LegendBox" + i.ToString(), true)[0];
-                    var ColorButton = (Button)this.Controls.Find("Colorbutton" + i.ToString(), true)[0];
-                    var checkBoxvar = (CheckBox)this.Controls.Find("checkBox" + i.ToString(), true)[0];
-                    Point.Text = item.Key;
-                    Legend.Text = item.Value.Legend;
-                    ColorButton.BackColor = item.Value.Color;
-                    checkBoxvar.Checked = true;
+                    if (item.Key != "Base")
+                    {
+                        var Point = (TextBox)this.Controls.Find("PointBox" + i.ToString(), true)[0];
+                        var Legend = (TextBox)this.Controls.Find("LegendBox" + i.ToString(), true)[0];
+                        var ColorButton = (Button)this.Controls.Find("Colorbutton" + i.ToString(), true)[0];
+                        var checkBoxvar = (CheckBox)this.Controls.Find("checkBox" + i.ToString(), true)[0];
+                        Point.Text = item.Key;
+                        Legend.Text = item.Value.Legend;
+                        ColorButton.BackColor = item.Value.Color;
+                        checkBoxvar.Checked = true;
+                    }
                     i++;
                 }
             }
