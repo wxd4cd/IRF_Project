@@ -108,7 +108,7 @@
     <None Include="Resources\About.rtf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\HelpCSV.rtf">
+    <None Include="Resources\Help.rtf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
