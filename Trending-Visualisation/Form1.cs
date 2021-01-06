@@ -8,17 +8,34 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using Trending_Visualisation.Entities;
 
 namespace Trending_Visualisation
 {
     public partial class Form1 : Form
     {
         DataTable CSVTable = new DataTable();
+        Settings Settings = new Settings();
         public Form1()
         {
             InitializeComponent();
 			this.Icon = new Icon("Resources/Form.ico");
             chart1.Series.Clear();
+        }
+
+        public List<string> GetdtColumns()
+        {
+            List<string> ColumnList = new List<string>();
+            foreach (DataColumn column in CSVTable.Columns)
+            {
+                string ColumnName = column.ColumnName.ToString();
+                if (! ColumnName.Contains("point"))
+                {
+                    ColumnList.Add(ColumnName);
+
+                }
+            }
+            return ColumnList;
         }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -56,7 +73,7 @@ namespace Trending_Visualisation
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SettingsForm SettingsDialog = new SettingsForm();
+            SettingsForm SettingsDialog = new SettingsForm(GetdtColumns(), CSVTable.Rows.Count, Settings);
             SettingsDialog.ShowDialog();
         }
 
@@ -130,15 +147,41 @@ namespace Trending_Visualisation
 
         private void buttonGenerateChart_Click(object sender, EventArgs e)
         {
+            if (Settings.GetEmpty())
+            {
+                SettingsForm SettingsDialog = new SettingsForm(GetdtColumns(), CSVTable.Rows.Count, Settings);
+                SettingsDialog.ShowDialog();
+            }
+            if (! Settings.GetEmpty())
+            {
+                GenerateMovingAverages();
+                FillChart(Settings);
+            }
+        }
+
+        private void GenerateMovingAverages()
+        {
+            
+        }
+
+        private void FillChart(Settings settings)
+        {
             chart1.DataSource = CSVTable;
-           
+            chart1.Series.Clear();
             var series = new Series();
             series.ChartType = SeriesChartType.Line;
-            series.XValueMember = "Item";
-            series.YValueMembers = "Összesen";
-            series.XAxisType = "Test1";
+            series.XValueMember = settings.GetXColumn();
+            var columns = settings.GetColumns();
+            series.YValueMembers = columns["Base"].ColumName;
             series.BorderWidth = 2;
+            series.Color = columns["Base"].Color;
+            series.Name = settings.GetBaseLegend();
             chart1.Series.Add(series);
+            columns.Remove("Base");
+
+            chart1.ChartAreas[0].AxisX.Title = settings.GetXTitle();
+            chart1.ChartAreas[0].AxisY.Title = columns["Base"].Legend;
+
 
             var legend = chart1.Legends[0];
             // legend.Enabled = false;

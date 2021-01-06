@@ -1,37 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Trending_Visualisation.Entities
 {
-    public sealed class Settings
+    public class Settings
     {
-        private static Settings instance = null;
-        private static readonly object padlock = new object();
         private bool Empty = true;
 
-        Settings()
+        private Dictionary<string, ColumnData> Columns = new Dictionary<string, ColumnData>{}; 
+        private string BaseXColumn { get; set; }
+        private string BaseXTitle { get; set; }
+        private string BaseLegend { get; set; }
+
+        public Settings()
         {
 
         }
-
-        public static Settings Instance
-        {
-            get
-            {
-                lock (padlock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new Settings();
-                    }
-                    return instance;
-                }
-            }
-        }
-
         public bool GetEmpty()
         {
             return Empty;
@@ -41,6 +24,45 @@ namespace Trending_Visualisation.Entities
         {
             Empty = state;
         }
+        public string GetXColumn()
+        {
+            return BaseXColumn;
+        }
+        public void SetXColumn(string xcolumn)
+        {
+            BaseXColumn = xcolumn;
+        }
+        public string GetXTitle()
+        {
+            return BaseXTitle;
+        }
+
+        public void SetXTitle(string xtitle)
+        {
+            BaseXTitle = xtitle;
+        }
+        
+        
+        public string GetBaseLegend()
+        {
+            return BaseLegend;
+        }
+
+        public void SetBaseLegend(string legend)
+        {
+            BaseLegend = legend;
+        }
+
+
+        public Dictionary<string, ColumnData> GetColumns()
+        {
+            return Columns;
+        }
+        public void SetColumns(Dictionary<string, ColumnData> columns)
+        {
+            Columns = columns;
+        }
+
     }
 
 
