@@ -83,21 +83,21 @@ namespace Trending_Visualisation
             // openCSVFileToolStripMenuItem
             // 
             this.openCSVFileToolStripMenuItem.Name = "openCSVFileToolStripMenuItem";
-            this.openCSVFileToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.openCSVFileToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.openCSVFileToolStripMenuItem.Text = "Open CSV file...";
             this.openCSVFileToolStripMenuItem.Click += new System.EventHandler(this.openCSVFileToolStripMenuItem_Click);
             // 
             // saveDiagramToolStripMenuItem
             // 
             this.saveDiagramToolStripMenuItem.Name = "saveDiagramToolStripMenuItem";
-            this.saveDiagramToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.saveDiagramToolStripMenuItem.Text = "Save Diagram...";
+            this.saveDiagramToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.saveDiagramToolStripMenuItem.Text = "Save Diagram to PNG...";
             this.saveDiagramToolStripMenuItem.Click += new System.EventHandler(this.saveDiagramToolStripMenuItem_Click);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -161,7 +161,6 @@ namespace Trending_Visualisation
             // 
             this.FileNameToolStrip.Name = "FileNameToolStrip";
             this.FileNameToolStrip.Size = new System.Drawing.Size(0, 17);
-            this.FileNameToolStrip.Click += new System.EventHandler(this.toolStripStatusLabel2_Click);
             // 
             // FileStatusToolStrip
             // 

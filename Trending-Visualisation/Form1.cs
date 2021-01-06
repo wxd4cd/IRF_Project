@@ -29,7 +29,7 @@ namespace Trending_Visualisation
             foreach (DataColumn column in CSVTable.Columns)
             {
                 string ColumnName = column.ColumnName.ToString();
-                if (! ColumnName.Contains("point"))
+                if (!ColumnName.Contains("point"))
                 {
                     ColumnList.Add(ColumnName);
 
@@ -89,12 +89,7 @@ namespace Trending_Visualisation
             HelpForm HelpDialog = new HelpForm();
             HelpDialog.ShowDialog();
         }
-
-        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
-        {
-
-        }
-
+         
         private DataTable GetDataToGridView(string csvpath)
         {
             var dTable = new DataTable();
@@ -140,6 +135,7 @@ namespace Trending_Visualisation
                 dataGridView1.Columns.Clear();
                 dataGridView1.DataSource = CSVTable;
                 FileStatusToolStrip.Text = "READY";
+                Settings.SetEmpty(true);
                 dataGridView1.Refresh();
                 chart1.Series.Clear();
             }
@@ -164,12 +160,24 @@ namespace Trending_Visualisation
             var MergedTable = new DataTable();
             MergedTable = CSVTable;
             var columns = Settings.GetColumns();
+            var deletingColumns = new List<string>();
+            foreach (DataColumn existingcol in MergedTable.Columns)
+            {
+                if (existingcol.ColumnName.Contains("point"))
+                {
+                    deletingColumns.Add(existingcol.ColumnName);
+                }
+            }
+            foreach (string deleteName in deletingColumns)
+            {
+                MergedTable.Columns.Remove(deleteName);
+            }
             if (columns.Count > 1)
             {
                 var originlist = new List<int>();
                 var col = columns["Base"].ColumName;
                 DataView dv = new DataView(MergedTable);
-                DataTable dt = dv.ToTable(col);
+                DataTable dt = dv.ToTable(col, false, col);
                 foreach (DataRow row in dt.Rows)
                 {
                     var cell = Int32.Parse(row.ItemArray[0].ToString());
@@ -180,15 +188,19 @@ namespace Trending_Visualisation
                 {
                     if (item.Key != "Base")
                     {
-                        var resultlist = CalculateMovingAverage(Int32.Parse(item.Key), originlist);
-                        var newcol = item.Value.Legend;
+                        var point = Int32.Parse(item.Key);
+                        var resultlist = CalculateMovingAverage(point, originlist);
+                        var newcol = item.Value.ColumName;
+                        if (MergedTable.Columns.Contains(newcol)) {
+                            MergedTable.Columns.Remove(newcol);
+                        }
                         MergedTable.Columns.Add(newcol);
                         DataView MergedView = new DataView(MergedTable);
                         for (int i=0;i<resultlist.Count;i++)
                         {
                             DataRowView rowView = MergedView[i];
                             rowView.BeginEdit();
-                            rowView[rowView.Row.ItemArray.Length - 1] = resultlist[i].ToString();
+                            rowView[rowView.Row.ItemArray.Length - 1] = resultlist[i];
                             rowView.EndEdit();
                         }
                         MergedTable = MergedView.Table;
@@ -199,19 +211,19 @@ namespace Trending_Visualisation
             return MergedTable;
         }
 
-        private List<int> CalculateMovingAverage(int point, List<int> originlist)
+        private List<string> CalculateMovingAverage(int point, List<int> originlist)
         {
-            var resultlist = new List<int>();
+            var resultlist = new List<string>();
             var length = originlist.Count;
             for (int i=1;i<=length;i++)
             {
                 if (i <= point / 2)
                 {
-                    resultlist.Add(0);
+                    resultlist.Add("");
                 }
                 if (i > length - point / 2)
                 {
-                    resultlist.Add(0);
+                    resultlist.Add("");
                 }
                 if (i > point / 2 && i <= length - point / 2)
                 {
@@ -227,7 +239,8 @@ namespace Trending_Visualisation
                         range = originlist.GetRange(i - point / 2 - 1, point);
                     
                     }
-                    resultlist.Add(range.Sum() / point);
+                    var sum = range.Sum() / point;
+                    resultlist.Add(sum.ToString());
                 }
 
             }
@@ -246,6 +259,7 @@ namespace Trending_Visualisation
             series.BorderWidth = 2;
             series.Color = columns["Base"].Color;
             series.Name = settings.GetBaseLegend();
+            series.Enabled = true;
             chart1.Series.Add(series);
             chart1.ChartAreas[0].AxisX.Title = settings.GetXTitle();
             chart1.ChartAreas[0].AxisY.Title = columns["Base"].Legend;
@@ -254,12 +268,15 @@ namespace Trending_Visualisation
                 if (item.Key != "Base")
                 {
                     var newseries = new Series();
+                    newseries.EmptyPointStyle.BorderWidth = 0;
+                    newseries.EmptyPointStyle.MarkerStyle = MarkerStyle.None;
                     newseries.ChartType = SeriesChartType.Line;
                     newseries.XValueMember = settings.GetXColumn();
                     newseries.YValueMembers = item.Value.ColumName;
                     newseries.BorderWidth = 2;
                     newseries.Color = item.Value.Color;
                     newseries.Name = item.Value.Legend;
+                    newseries.Enabled = true;
                     chart1.Series.Add(newseries);
                 }
             }
@@ -269,6 +286,8 @@ namespace Trending_Visualisation
             chartArea.AxisY.MajorGrid.Enabled = false;
             chartArea.AxisY.IsStartedFromZero = false;
             chartArea.BorderColor = Color.Black;
+            chartArea.BorderWidth = 3;
+            chart1.Update();
         }
     }
 }

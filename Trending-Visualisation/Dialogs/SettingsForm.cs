@@ -37,7 +37,7 @@ namespace Trending_Visualisation
                 YcomboBox.SelectedIndex = YcomboBox.FindString(columns["Base"].ColumName, 0);
                 Ytitle.Text = columns["Base"].Legend;
                 BaseColorbutton.BackColor = columns["Base"].Color;
-                int i = 1;
+                int i = 0;
                 foreach (var item in columns)
                 {
                     if (item.Key != "Base")
