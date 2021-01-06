@@ -10,7 +10,7 @@ namespace Trending_Visualisation
         {
             InitializeComponent();
             this.Icon = new Icon("Resources/Form.ico");
-            richTextBox1.LoadFile("Resources/HelpCSV.rtf");
+            richTextBox1.LoadFile("Resources/Help.rtf");
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
