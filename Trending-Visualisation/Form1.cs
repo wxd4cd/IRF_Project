@@ -161,14 +161,15 @@ namespace Trending_Visualisation
 
         private DataTable GenerateMovingAverages()
         {
-            var MergedTable = CSVTable;
+            var MergedTable = new DataTable();
+            MergedTable = CSVTable;
             var columns = Settings.GetColumns();
             if (columns.Count > 1)
             {
                 var originlist = new List<int>();
                 var col = columns["Base"].ColumName;
-                DataView dv = new DataView(CSVTable);
-                DataTable dt = dv.ToTable(true, col);
+                DataView dv = new DataView(MergedTable);
+                DataTable dt = dv.ToTable(col);
                 foreach (DataRow row in dt.Rows)
                 {
                     var cell = Int32.Parse(row.ItemArray[0].ToString());
@@ -182,13 +183,15 @@ namespace Trending_Visualisation
                         var resultlist = CalculateMovingAverage(Int32.Parse(item.Key), originlist);
                         var newcol = item.Value.Legend;
                         MergedTable.Columns.Add(newcol);
-                        int i = 0;
-                        foreach (DataRow row in MergedTable.Rows)
+                        DataView MergedView = new DataView(MergedTable);
+                        for (int i=0;i<resultlist.Count;i++)
                         {
-                            var rowArray = row.ItemArray;
-                            rowArray[rowArray.Length - 1] = resultlist[i].ToString();
-                            i++;
+                            DataRowView rowView = MergedView[i];
+                            rowView.BeginEdit();
+                            rowView[rowView.Row.ItemArray.Length - 1] = resultlist[i].ToString();
+                            rowView.EndEdit();
                         }
+                        MergedTable = MergedView.Table;
                     }
 
                 }

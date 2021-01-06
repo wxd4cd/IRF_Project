@@ -110,7 +110,7 @@ namespace Trending_Visualisation
             }
         }
 
-        private bool CheckPoint(string text, int rownum)
+        public bool CheckPoint(string text, int rownum)
         {
             if (text.All(char.IsDigit))
             {
